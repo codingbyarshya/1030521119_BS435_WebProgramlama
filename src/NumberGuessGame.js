@@ -88,6 +88,7 @@ const NumberGuessGame = () => {
 
       <button onClick={handleRestart}>Restart</button>
     </div>
+    
   );
 };
 
