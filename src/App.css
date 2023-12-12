@@ -2,6 +2,7 @@ body {
   font-family: 'Arial', sans-serif;
   text-align: center;
   background-color: #f0f0f0;
+  transition: background-color 0.5s; 
 }
 
 .container {
@@ -10,6 +11,12 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
+  transition: background-color 0.5s; 
+}
+
+.night-mode {
+  background-color: #333;
+  color: #fff;
 }
 
 h1 {
@@ -31,15 +38,35 @@ button:hover {
   background-color: #45a049;
 }
 
+button.night-mode {
+  background-color: #001f00;
+}
+
+button.night-mode:hover {
+  background-color: #003300;
+}
+
 p {
   color: #333;
   font-size: 18px;
+}
+
+
+.day-mode {
+  background-color: #fff; 
+  color: #000; 
+}
+
+.night-mode {
+  background-color: #000; 
+  color: #fff; 
 }
 
 input {
   font-size: 16px;
   padding: 8px;
   margin: 5px;
+  margin-top: 50px;
   border: 1px solid #ccc;
   border-radius: 3px;
 }
@@ -49,3 +76,50 @@ input:focus {
   border-color: #4caf50;
 }
 
+input.night-mode {
+  background-color: #222;
+  color: #fff;
+  border-color: #444;
+}
+
+input.night-mode:focus {
+  border-color: #00cc00;
+}
+.app-container {
+  text-align: center;
+  transition: background-color 0.5s; 
+}
+
+.toggle-night-mode {
+  font-size: 16px;
+  padding: 14px 20px;
+  margin: 5px;
+  cursor: pointer;
+  background-color: green;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+}
+
+.toggle-night-mode:hover {
+  background-color: #45a049;
+}
+
+.toggle-night-mode.night-mode {
+  background-color: #026902;
+}
+
+.toggle-night-mode.night-mode:hover {
+  background-color: #d305b8;
+}
+
+.number-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 40px;
+  transition: filter 0.5s;
+}
+
+.number-image.night-mode {
+  filter: invert(100%);
+}
