@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
 
@@ -10,6 +10,8 @@ const NumberGuessGame = () => {
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [isTwoPlayerMode, setIsTwoPlayerMode] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [timeSpent, setTimeSpent] = useState(0);
+  const startTimeRef = useRef(0);
 
   const handleInputChange = (event) => {
     if (!isGameOver) {
@@ -22,6 +24,10 @@ const NumberGuessGame = () => {
       return;
     }
 
+    if (!startTimeRef.current) {
+      startTimeRef.current = performance.now();
+    }
+
     if (isNaN(guess)) {
       setMessage('Please enter a valid number');
     } else {
@@ -30,14 +36,18 @@ const NumberGuessGame = () => {
 
       if (parseInt(guess, 10) === targetNumber || newAttempts >= 10) {
         setIsGameOver(true);
+        const endTime = performance.now();
+        const elapsedTime = (endTime - startTimeRef.current) / 1000;
+        setTimeSpent(elapsedTime);
         setMessage(
           `${playerLabel}${
             parseInt(guess, 10) === targetNumber
               ? 'Congratulations! You guessed the number '
               : "Sorry, you've reached the maximum number of attempts. The correct number was "
-          }${targetNumber} in ${newAttempts} attempts.`
+          }${targetNumber} in ${newAttempts} attempts. Time: ${elapsedTime.toFixed(2)} seconds.`
         );
         setPlayerAttempts({ ...playerAttempts, [currentPlayer]: newAttempts });
+        startTimeRef.current = 0; 
       } else if (parseInt(guess, 10) < targetNumber) {
         setMessage(`${playerLabel}Too low! Try again.`);
         setPlayerAttempts({ ...playerAttempts, [currentPlayer]: newAttempts });
@@ -60,6 +70,8 @@ const NumberGuessGame = () => {
     setPlayerAttempts({ 1: 0, 2: 0 });
     setCurrentPlayer(1);
     setIsGameOver(false);
+    setTimeSpent(0);
+    startTimeRef.current = 0;
   };
 
   const toggleGameMode = () => {
@@ -73,6 +85,7 @@ const NumberGuessGame = () => {
         {isTwoPlayerMode ? 'Switch to Single Player Mode' : 'Switch to Two Player Mode'}
       </button>
       <p>{message}</p>
+      {isGameOver && <p>Time Spent: {timeSpent.toFixed(2)} seconds</p>}
 
       {!isGameOver && (
         <>
@@ -88,7 +101,6 @@ const NumberGuessGame = () => {
 
       <button onClick={handleRestart}>Restart</button>
     </div>
-    
   );
 };
 
