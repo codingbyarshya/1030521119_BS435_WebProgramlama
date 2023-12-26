@@ -44,7 +44,7 @@ const NumberGuessGame = () => {
             parseInt(guess, 10) === targetNumber
               ? 'Congratulations! You guessed the number '
               : "Sorry, you've reached the maximum number of attempts. The correct number was "
-          }${targetNumber} in ${newAttempts} attempts. Time: ${elapsedTime.toFixed(2)} seconds.`
+          }${targetNumber} in ${newAttempts} attempts. `
         );
         setPlayerAttempts({ ...playerAttempts, [currentPlayer]: newAttempts });
         startTimeRef.current = 0; 
